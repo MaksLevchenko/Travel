@@ -6,6 +6,7 @@ from .models import Comment
 
 
 class SigUpForm(forms.Form):
+    """Форма регистрации"""
     username = forms.CharField(
         max_length=100,
         required=True,
@@ -52,7 +53,9 @@ class SigUpForm(forms.Form):
         auth = authenticate(**self.cleaned_data)
         return auth
 
+
 class SignInForm(forms.Form):
+    """Форма авторизации"""
     username = forms.CharField(
         max_length=100,
         required=True,
@@ -72,7 +75,9 @@ class SignInForm(forms.Form):
         })
     )
 
+
 class FeedBackForm(forms.Form):
+    """Форма обратной связи"""
     name = forms.CharField(
         required=True,
         max_length=100,
@@ -115,7 +120,7 @@ class FeedBackForm(forms.Form):
 
 
 class CommentForm(forms.ModelForm):
-
+    """Форма комментария"""
     class Meta:
         model = Comment
         fields = ('text',)

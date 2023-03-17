@@ -7,6 +7,7 @@ from taggit.managers import TaggableManager
 
 
 class Post(models.Model):
+    """Модель поста"""
     h1 = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
     url = models.SlugField()
@@ -22,6 +23,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
+    """Модель комментария"""
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_name')
     text = models.TextField()

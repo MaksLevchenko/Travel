@@ -26,7 +26,9 @@ class MaineView(View):
             }
         )
 
+
 class PostDetailView(View):
+    """Пост"""
     def get(self, request, slug, *args, **kwargs):
         post = get_object_or_404(Post, url=slug)
         common_tags = Post.tag.most_common()
@@ -53,6 +55,7 @@ class PostDetailView(View):
 
 
 class SignUpView(View):
+    """Авторизация"""
     def get(self, request, *args, **kwargs):
         form = SigUpForm()
         return render(request, 'signup.html', context={
@@ -72,12 +75,13 @@ class SignUpView(View):
 
 
 class SignInView(View):
+    """Регистрация"""
     def get(self, request, *args, **kwargs):
         form = SignInForm()
         return render(request, 'signin.html', context={
-                      'form': form})
+            'form': form})
 
-    def post(self,request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         form = SignInForm(request.POST)
         if form.is_valid():
             username = request.POST['username']
@@ -92,14 +96,15 @@ class SignInView(View):
 
 
 class FeedBackView(View):
+    """Обратная связь"""
     def get(self, request, *args, **kwargs):
         form = FeedBackForm()
         return render(request, 'contact.html', context={
-                      'form': form,
-                      'title': 'Написать мне'
+            'form': form,
+            'title': 'Написать мне'
         })
 
-    def post(self,request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         form = FeedBackForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
@@ -112,11 +117,12 @@ class FeedBackView(View):
                 return HttpResponse('Невалидный заголовок')
             return HttpResponseRedirect('success')
         return render(request, 'contact.html', context={
-                'form': form,
-            })
+            'form': form,
+        })
 
 
 class SuccessView(View):
+    """Благодарность"""
     def get(self, request, *args, **kwargs):
         return render(request, 'success.html', context={
             'title': 'Спасибо'
@@ -124,6 +130,7 @@ class SuccessView(View):
 
 
 class SearchResultsView(View):
+    """Поиск"""
     def get(self, request, *args, **kwargs):
         qwery = self.request.GET.get('q')
         results = ''
@@ -137,7 +144,9 @@ class SearchResultsView(View):
             'count': len(results)
         })
 
+
 class TagView(View):
+    """Тэг"""
     def get(self, request, slug, *args, **kwargs):
         tag = get_object_or_404(Tag, slug=slug)
         posts = Post.objects.filter(tag=tag)
@@ -147,4 +156,3 @@ class TagView(View):
             'posts': posts,
             'common_tags': common_tags
         })
-# Create your views here.
